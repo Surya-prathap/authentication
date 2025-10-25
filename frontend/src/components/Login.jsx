@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const backend_url = "https://authentication-backend-orcin.vercel.app";
+const backend_url = "https://authentication-backend-orcin.vercel.app/";
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),

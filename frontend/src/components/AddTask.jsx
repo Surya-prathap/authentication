@@ -15,11 +15,11 @@ const AddTask = () => {
   const [editTask, setEditTask] = useState("");
   const [editDesc, setEditDesc] = useState("");
 
-  const backend_url = "https://authentication-backend-orcin.vercel.app";
+  const backend_url = "https://authentication-backend-orcin.vercel.app/";
 
   const getTasks = async () => {
     try {
-      const res = await axios.get(`${backend_url}api/tasks`, {
+      const res = await axios.get(`${backend_url}/api/tasks`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -119,7 +119,7 @@ const AddTask = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/tasks/${id}`,
+        `${backend_url}/api/tasks/${id}`,
 
         {
           headers: {

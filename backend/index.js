@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const bcrtpt = require("bcryptjs");
+const bcrypt = require("bcryptjs");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
 
@@ -16,7 +16,7 @@ const corsOptions = {
   origin: allowedOrigin,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
-  Credentials: true,
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
@@ -110,7 +110,7 @@ app.post("/api/auth/login", async (req, res) => {
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).json({ msg: "Email does not exist" });
 
-    const validPassword = await bcrtpt.compare(
+    const validPassword = await bcrypt.compare(
       req.body.password,
       user.password
     );
@@ -123,7 +123,7 @@ app.post("/api/auth/login", async (req, res) => {
         name: user.name,
         email: user.email,
       },
-      "secret_key",
+      secret_key,
       { expiresIn: "7d" }
     );
     res.json({
@@ -145,7 +145,7 @@ const verifyToken = (req, res, next) => {
   const token = header.split(" ")[1];
   if (!token) return res.status(400).json({ msg: "token missing" });
   try {
-    const verified = jwt.verify(token, "secret_key");
+    const verified = jwt.verify(token, secret_key);
     req.user = verified;
     next();
   } catch (error) {
