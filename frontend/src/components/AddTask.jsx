@@ -56,18 +56,10 @@ const AddTask = () => {
       setTaskList([...taskList, res.data.task]);
       setTask("");
       setDescription("");
-      alert("Task added Successfully.");
     } catch (error) {
       console.log(error.response?.data || error.message);
       alert("Error in adding task");
     }
-  };
-
-  const handleTaskUpdated = (updatedTask) => {
-    const updatedList = taskList.map((t) =>
-      t._id === updatedTask._id ? updatedTask : t
-    );
-    setTaskList(updatedList);
   };
 
   const Edit = (task) => {
@@ -88,7 +80,9 @@ const AddTask = () => {
         }
       );
       handleTaskUpdated(res.data);
-      getTasks();
+      setTaskList(
+        taskList.map((t) => (t._id === updatedTask._id ? updatedTask : t))
+      );
       setEditingId(null);
     } catch (error) {
       console.log(error);
@@ -110,6 +104,7 @@ const AddTask = () => {
       setTaskList(
         taskList.map((t) => (t._id === id ? { ...t, done: !t.done } : t))
       );
+      setEditingId(null);
     } catch (error) {
       console.log(error);
       alert("error in updating task...");
@@ -128,7 +123,6 @@ const AddTask = () => {
         }
       );
       setTaskList(taskList.filter((t) => t._id !== id));
-      alert("task deleted successfully");
     } catch (error) {
       console.log(error);
       alert("error in deleting  task...");
