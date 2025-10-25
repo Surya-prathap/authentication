@@ -15,7 +15,7 @@ const AddTask = () => {
   const [editTask, setEditTask] = useState("");
   const [editDesc, setEditDesc] = useState("");
 
-  const backend_url = "https://authentication-backend-orcin.vercel.app";
+  const backend_url = "https://authentication-backend-orcin.vercel.app/";
 
   const getTasks = async () => {
     try {
