@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+const backend_url = "https://authentication-backend-orcin.vercel.app/";
+
 const schema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(4).max(8).required(),
@@ -25,10 +27,7 @@ const Login = () => {
 
   const handleLogin = async (data) => {
     try {
-      const res = await axios.post(
-        "http://localhost:8000/api/auth/login",
-        data
-      );
+      const res = await axios.post(`${backend_url}api/auth/login`, data);
       localStorage.setItem("token", res.data.token);
       alert("Login Successful");
       localStorage.setItem("userName", res.data.user.name);
