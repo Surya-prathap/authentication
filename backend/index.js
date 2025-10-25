@@ -9,7 +9,17 @@ const passwordComplexity = require("joi-password-complexity");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+
+const allowedOrigin = "https://authentication-frontend-one.vercel.app/";
+
+const corsOptions = {
+  origin: allowedOrigin,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  Credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 const PORT = process.env.PORT;
 const url = process.env.MONGO_ATLAS_URL;
