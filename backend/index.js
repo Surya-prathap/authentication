@@ -10,10 +10,17 @@ const passwordComplexity = require("joi-password-complexity");
 const app = express();
 app.use(express.json());
 
-const allowedOrigin = "https://authentication-frontend-one.vercel.app";
+const allowedOrigin = [
+  "https://authentication-frontend-one.vercel.app",
+  "http://localhost:5173",
+];
 
 const corsOptions = {
-  origin: allowedOrigin,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error("Not allowed by CORS"));
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
@@ -86,7 +93,7 @@ app.post("/api/auth/register", async (req, res) => {
     if (existingUser)
       return res.status(400).json({ msg: "Email already exist" });
 
-    const hashedPassword = await bcrtpt.hash(req.body.password, 10);
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     const newUser = new User({
       name: req.body.name,
