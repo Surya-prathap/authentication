@@ -10,7 +10,7 @@ const passwordComplexity = require("joi-password-complexity");
 const app = express();
 app.use(express.json());
 
-const allowedOrigin = "https://authentication-frontend-one.vercel.app/";
+const allowedOrigin = "https://authentication-frontend-one.vercel.app";
 
 const corsOptions = {
   origin: allowedOrigin,

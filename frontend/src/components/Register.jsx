@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const backend_url = "https://authentication-backend-orcin.vercel.app/";
+const backend_url = "https://authentication-backend-orcin.vercel.app";
 
 const schema = yup.object().shape({
   name: yup.string().min(4).required("Name is required"),
@@ -28,7 +28,7 @@ const Register = () => {
 
   const handleRegister = async (data) => {
     try {
-      await axios.post(`${backend_url}api/auth/register`, data, {
+      await axios.post(`${backend_url}/api/auth/register`, data, {
         headers: { "Content-Type": "application/json" },
       });
       alert("Registered Successfully...");
