@@ -143,6 +143,10 @@ const verifyToken = (req, res, next) => {
   }
 };
 
+app.get("/", (req, res) => {
+  res.send("API is running Successfully..");
+});
+
 app.get("/api/tasks", verifyToken, async (req, res) => {
   try {
     const allTasks = await Task.find({ userId: req.user._id });
